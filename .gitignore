@@ -1,0 +1,9 @@
+#ignore all .log files
+*.log
+
+#ignore textures
+Textures/
+
+#ignore visual studio folders
+x64/
+.vs/
