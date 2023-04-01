@@ -4,7 +4,7 @@
 #include <time.h>
 
 void sortValues(std::vector<std::pair<int, int>>* values, bool print = true);
-int  selectWord(std::vector<std::pair<int, int>>* values);
+int  selectWord(std::vector<std::pair<int, int>>* values, int difficulty = -1);
 
 int main()
 {
@@ -15,13 +15,14 @@ int main()
 
 	sortValues(&values);
 
-	while (1) 
+	int input  = 0;
+	while (input != 27) 
 	{
-		int index = rand() % values.size();
+		int index = selectWord(&values, -1);
 
-		std::cout << values[index].second << " | " << values[index].second << " | " << words[values[index].second] << "\n";
+		std::cout << "The word is: " << words[index] << "\n";
 
-		_getch();
+		input = _getch();
 	}
 }
 
@@ -46,4 +47,32 @@ void sortValues(std::vector<std::pair<int, int>>* values, bool print)
 
 	if(print)
 		std::cout << "Easy:   " << topIndex << "\nMedium: " << bottomIndex - topIndex << "\nHard:   " << values->size() - bottomIndex << "\nTotal:  " << values->size() << "\n\n\n";
+}
+
+int selectWord(std::vector<std::pair<int, int>>* values, int difficulty)
+{
+	static int previousDifficulty = -2;
+
+	int size = values->size();
+
+	if (difficulty != -1)
+	{
+		for(int i = 0; i < values->size(); i++)
+			if (values->at(i).first > difficulty)
+			{
+				size = i;
+				break;
+			}
+	}
+
+	if (difficulty != previousDifficulty)
+	{
+		std::cout << "Selecting from a pool of: " << size << " words.\n\n";
+
+		previousDifficulty = difficulty;
+	}
+
+	int selection = rand() % size;
+	
+	return values->at(selection).second;
 }
