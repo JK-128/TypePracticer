@@ -1,20 +1,49 @@
 #include "ListLoading.h"
+#include <algorithm>
+#include <conio.h>
+#include <time.h>
+
+void sortValues(std::vector<std::pair<int, int>>* values, bool print = true);
+int  selectWord(std::vector<std::pair<int, int>>* values);
 
 int main()
 {
-	std::vector<std::string> words = loadWords("Word Lists/lowercaseAll.txt");
-	std::vector<int> values        = loadValues("Word Lists/rowClassified.txt");
+	srand(time(NULL));
 
-	for (int i = 0; i < values.size(); i++)
-		if (values[i] == 1)
-			std::cout << i << " | " << words[i] << "\n";
+	std::vector<std::string> words          = loadWords("Word Lists/lowercaseAll.txt");
+	std::vector<std::pair<int, int>> values = loadValues("Word Lists/rowClassified.txt");
 
-	while (1) {}
+	sortValues(&values);
+
+	while (1) 
+	{
+		int index = rand() % values.size();
+
+		std::cout << values[index].second << " | " << values[index].second << " | " << words[values[index].second] << "\n";
+
+		_getch();
+	}
 }
 
-/*	STEPS:
-* -----------
-*  1. Get a list of every word in the English language.
-*  2. Iterate through and assign each word a number, 0 for home row, 1 for above and 2 for below.
-*  3. When the program runs, choose random words from list up to the selected difficulty (0 - 2).
-*/
+void sortValues(std::vector<std::pair<int, int>>* values, bool print)
+{
+	std::sort(values->begin(), values->end());
+
+	int topIndex = -1;
+	int bottomIndex = -1;
+
+	for (int i = 0; i < values->size(); i++)
+	{
+		if (values->at(i).first == 1 && topIndex == -1)
+			topIndex = i;
+
+		else if (values->at(i).first == 2 && bottomIndex == -1)
+			bottomIndex = i;
+
+		if (topIndex != -1 && bottomIndex != -1)
+			break;
+	}
+
+	if(print)
+		std::cout << "Easy:   " << topIndex << "\nMedium: " << bottomIndex - topIndex << "\nHard:   " << values->size() - bottomIndex << "\nTotal:  " << values->size() << "\n\n\n";
+}

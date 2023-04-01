@@ -22,17 +22,21 @@ std::vector<std::string> loadWords(std::string path)
 	return words;
 }
 
-std::vector<int> loadValues(std::string path)
+std::vector<std::pair<int, int>> loadValues(std::string path)
 {
-	std::vector<int> values;
+	std::vector<std::pair<int, int>> values;
 	std::string value;
 
 	std::ifstream file(path);
 
+	int index = 0;
 	while (std::getline(file, value))
 	{
-		if (value.size() > 0)
-			values.push_back(std::stoi(value));
+		int valueInt = std::stoi(value);
+
+		values.push_back(std::make_pair(valueInt, index));
+
+		index++;
 	}
 
 	file.close();
