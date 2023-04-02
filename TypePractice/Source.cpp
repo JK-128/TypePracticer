@@ -14,6 +14,8 @@ int main()
 {
 	srand(time(NULL));
 
+	int sentenceLength = 3;
+
 	ValuesData data = loadData("Word Lists/lowercaseAll.txt", "Word Lists/rowClassified.txt");
 
 	sortValues(&data.values, data.levelCount, true);
@@ -34,11 +36,31 @@ int main()
 			}
 		}
 
-		int index = selectWord(&data.values, level);
+		std::vector<int> indexes;
+		std::string sentence = "";
 
-		std::cout << "The word is: " << data.words[index] << "\n";
+		for (int i = 0; i < sentenceLength; i++)
+		{
+			indexes.push_back(selectWord(&data.values, level));
 
-		input = userAttempt(data.words[index]).code;
+			if (i != 0)
+				sentence += " ";
+
+			sentence += data.words[indexes[i]];
+		}
+		std::cout << sentence << "\n";
+
+		input = userAttempt(sentence).code;
+		/*
+		std::cout << "\n\n";
+		
+		for (int i = 0; i < sentenceLength; i++)
+		{
+			input = userAttempt(data.words[indexes[i]]).code;
+
+			if (input == 27 || input == 47)
+				break;
+		}*/
 	}
 }
 
@@ -49,11 +71,11 @@ Attempt userAttempt(std::string word)
 	int count = 0;
 	int input = 0;
 
-	while (input != 32 && input != 47 && input != 27 && input != 13)
+	while (input != 47 && input != 27 && input != 13)
 	{
 		input = _getch();
 
-		if (input != 32 && input != 13 && input != 47)
+		if (input != 13 && input != 47)
 		{
 			attempt.input.push_back((char)input);
 
