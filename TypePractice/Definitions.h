@@ -6,4 +6,6 @@ enum key
 	keyExit   = 27,
 	keyLevel  = 47,
 	keyOffset = 48,
+	keyLength = 92,
+
 } keys;
