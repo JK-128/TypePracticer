@@ -48,19 +48,10 @@ int main()
 
 			sentence += data.words[indexes[i]];
 		}
+
 		std::cout << sentence << "\n";
 
 		input = userAttempt(sentence).code;
-		/*
-		std::cout << "\n\n";
-		
-		for (int i = 0; i < sentenceLength; i++)
-		{
-			input = userAttempt(data.words[indexes[i]]).code;
-
-			if (input == 27 || input == 47)
-				break;
-		}*/
 	}
 }
 
@@ -68,8 +59,12 @@ Attempt userAttempt(std::string word)
 {
 	Attempt attempt;
 
-	int count = 0;
-	int input = 0;
+	int count    = 0;
+	int input    = 0;
+	int mistakes = 0;
+	int letters  = 0;
+
+	std::vector<int> mistakeIndexes;
 
 	while (input != 47 && input != 27 && input != 13)
 	{
@@ -80,9 +75,15 @@ Attempt userAttempt(std::string word)
 			attempt.input.push_back((char)input);
 
 			if (word.at(count) == (char)input)
-				std::cout << "O";
+				std::cout << word.at(count);
 			else
-				std::cout << "X";
+			{
+				std::cout << "_";
+				mistakes++;
+				mistakeIndexes.push_back(count);
+			}
+
+			letters++;
 		}
 
 		count++;
@@ -91,17 +92,24 @@ Attempt userAttempt(std::string word)
 			count = word.length() - 1;
 	}
 	attempt.code = input;
+	
+	std::cout << "\n\n[";
+	for (int i = 0; i < mistakeIndexes.size(); i++)
+		std::cout << word[mistakeIndexes[i]];
 
-	std::cout << "\nAttempt: [" << attempt.input << "]\n";
+	std::cout << "]\n";
 
 	if (attempt.input == word) 
 		std::cout << "\ncorrect\n\n";
 	else
 		std::cout << "\nIncorrect\n\n";
 
+	int accuracy = (1.0f - ((float)mistakes / (float)letters)) * 100.0f;
+
+	std::cout << accuracy << "% accuracy.\n";
+
 	return attempt;
 }
 
-// TO DO: String the above along to test for 100 words, then allow for a variable target.
 // TO DO: Put in performance trackers (time, mistakes, etc).
 // TO DO: Bring in something like SFML or even OpenGL to make it actually look nice.
