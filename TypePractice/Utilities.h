@@ -24,7 +24,7 @@ void sortValues(std::vector<std::pair<int, int>>* values, int levels, bool print
 			break;
 	}
 
-	boundaries.push_back(values->size());
+	boundaries.push_back((int)values->size());
 
 	if (print)
 		for (int i = 1; i < boundaries.size(); i++)
@@ -35,7 +35,7 @@ int selectWord(std::vector<std::pair<int, int>>* values, int difficulty)
 {
 	static int previousDifficulty = -2;
 
-	int size = values->size();
+	int size = (int)values->size();
 
 	if (difficulty != -1)
 	{

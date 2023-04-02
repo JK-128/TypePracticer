@@ -12,7 +12,7 @@ Attempt userAttempt(std::string word);
 
 int main()
 {
-	srand(time(NULL));
+	srand((uint16_t)time(NULL));
 
 	int sentenceLength = 3;
 
@@ -89,7 +89,7 @@ Attempt userAttempt(std::string word)
 		count++;
 
 		if (count >= word.length())
-			count = word.length() - 1;
+			count = (int)word.length() - 1;
 	}
 	attempt.code = input;
 	
@@ -104,7 +104,7 @@ Attempt userAttempt(std::string word)
 	else
 		std::cout << "\nIncorrect\n\n";
 
-	int accuracy = (1.0f - ((float)mistakes / (float)letters)) * 100.0f;
+	int accuracy = int((1.0f - ((float)mistakes / (float)letters)) * 100.0f);
 
 	std::cout << accuracy << "% accuracy.\n";
 
