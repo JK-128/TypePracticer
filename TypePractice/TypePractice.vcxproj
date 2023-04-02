@@ -130,6 +130,7 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Definitions.h" />
     <ClInclude Include="ListLoading.h" />
     <ClInclude Include="Utilities.h" />
   </ItemGroup>

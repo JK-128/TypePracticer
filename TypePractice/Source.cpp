@@ -1,5 +1,6 @@
 #include "ListLoading.h"
 #include "Utilities.h"
+
 #include <time.h>
 
 struct Attempt
@@ -20,19 +21,19 @@ int main()
 
 	sortValues(&data.values, data.levelCount, true);
 
-	int input =  47;
+	int input =  keyLevel;
 	int level = data.levelCount - 1;
 
-	while (input != 27) 
+	while (input != keyExit) 
 	{
-		if (input == 47)
+		if (input == keyLevel)
 		{
 			input = setDifficulty(data.levelCount);
 
-			if (input != 27)
+			if (input != keyExit)
 			{
 				std::cout << "\n";
-				level = (char)input - 48;
+				level = (char)input - keyOffset;
 			}
 		}
 
@@ -66,11 +67,11 @@ Attempt userAttempt(std::string word)
 
 	std::vector<int> mistakeIndexes;
 
-	while (input != 47 && input != 27 && input != 13)
+	while (input != keyLevel && input != keyExit && input != keyNext)
 	{
 		input = _getch();
 
-		if (input != 13 && input != 47)
+		if (input != keyNext && input != keyLevel)
 		{
 			attempt.input.push_back((char)input);
 
@@ -93,23 +94,30 @@ Attempt userAttempt(std::string word)
 	}
 	attempt.code = input;
 	
-	std::cout << "\n\n[";
-	for (int i = 0; i < mistakeIndexes.size(); i++)
-		std::cout << word[mistakeIndexes[i]];
+	if (attempt.code != keyExit && attempt.code != keyLevel)
+	{
+		std::cout << "\n\n[";
+		for (int i = 0; i < mistakeIndexes.size(); i++)
+			std::cout << word[mistakeIndexes[i]];
 
-	std::cout << "]\n";
+		std::cout << "]\n";
 
-	if (attempt.input == word) 
-		std::cout << "\ncorrect\n\n";
-	else
-		std::cout << "\nIncorrect\n\n";
+		if (attempt.input == word)
+			std::cout << "\ncorrect\n\n";
+		else
+			std::cout << "\nIncorrect\n\n";
 
-	int accuracy = int((1.0f - ((float)mistakes / (float)letters)) * 100.0f);
+		int accuracy = int((1.0f - ((float)mistakes / (float)letters)) * 100.0f);
 
-	std::cout << accuracy << "% accuracy.\n";
+		std::cout << accuracy << "% accuracy.\n";
+	}
 
 	return attempt;
 }
 
 // TO DO: Put in performance trackers (time, mistakes, etc).
+// TO DO: Create some kind of enum or similar to abstract away and give informative names to
+//        any hard-coded values (e.g. 47 could become levelChange).
+// TO DO: Split everything into functions in preparation for addition of graphics so 
+//        logic and function calls are the same, just function bodies need to be changed.
 // TO DO: Bring in something like SFML or even OpenGL to make it actually look nice.

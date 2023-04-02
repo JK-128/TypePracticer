@@ -1,4 +1,5 @@
 #pragma once
+#include "Definitions.h"
 #include <algorithm>
 #include <vector>
 #include <conio.h>
@@ -70,7 +71,7 @@ int setDifficulty(int levels)
 		input = _getch();
 
 		for (int i = 1; i < levels + 1; i++)
-			if (input == (i + 48))
+			if (input == (i + keyOffset))
 				return input - 1;
 
 		std::cout << "Invalid selection.\n";
