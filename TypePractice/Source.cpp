@@ -2,6 +2,14 @@
 #include "Utilities.h"
 #include <time.h>
 
+struct Attempt
+{
+	std::string input;
+	int code;
+};
+
+Attempt userAttempt(std::string word);
+
 int main()
 {
 	srand(time(NULL));
@@ -30,40 +38,48 @@ int main()
 
 		std::cout << "The word is: " << data.words[index] << "\n";
 
-		/*
-		std::string attempt;
-
-		std::cout << ">> ";
-		std::getline(std::cin, attempt);
-
-
-		*/
-
-		input = -1;
-
-		std::string attempt = "";
-		while (input != 32 && input != 47 && input != 27 && input != 13)
-		{
-			input = _getch();
-
-			if(input != 32 && input != 13 && input != 47)
-				attempt.push_back((char)input);
-		}
-		std::cout << "Attempt: [" << attempt << "]\n";
-
-		if (attempt == data.words[index])
-			std::cout << "\nCorrect!\n\n";
-		else
-			std::cout << "\nIncorrect\n\n";
-
-		//input = _getch();
-
+		input = userAttempt(data.words[index]).code;
 	}
 }
-// Try _getch() in a loop to get each character as it is typed. Then exit the loop after the space key had been pressed.
-// Hopefully this method will 1. work and 2. be easily expandible for more than one word.
 
-// TO DO: Figure out how to take in input via typing words that match the chosen random word.
+Attempt userAttempt(std::string word)
+{
+	Attempt attempt;
+
+	int count = 0;
+	int input = 0;
+
+	while (input != 32 && input != 47 && input != 27 && input != 13)
+	{
+		input = _getch();
+
+		if (input != 32 && input != 13 && input != 47)
+		{
+			attempt.input.push_back((char)input);
+
+			if (word.at(count) == (char)input)
+				std::cout << "O";
+			else
+				std::cout << "X";
+		}
+
+		count++;
+
+		if (count >= word.length())
+			count = word.length() - 1;
+	}
+	attempt.code = input;
+
+	std::cout << "\nAttempt: [" << attempt.input << "]\n";
+
+	if (attempt.input == word) 
+		std::cout << "\ncorrect\n\n";
+	else
+		std::cout << "\nIncorrect\n\n";
+
+	return attempt;
+}
+
 // TO DO: String the above along to test for 100 words, then allow for a variable target.
 // TO DO: Put in performance trackers (time, mistakes, etc).
 // TO DO: Bring in something like SFML or even OpenGL to make it actually look nice.
