@@ -3,27 +3,32 @@
 #include <vector>
 #include <conio.h>
 
-void sortValues(std::vector<std::pair<int, int>>* values, bool print = false)
+void sortValues(std::vector<std::pair<int, int>>* values, int levels, bool print = false)
 {
 	std::sort(values->begin(), values->end());
 
-	int topIndex = -1;
-	int botIndex = -1;
+	std::vector<int> boundaries;
 
-	for (int i = 0; i < values->size(); i++)
+	boundaries.push_back(0);
+
+	int previous = values->at(0).first;
+
+	for(int i = 1; i < values->size(); i++)
 	{
-		if (values->at(i).first == 1 && topIndex == -1)
-			topIndex = i;
-		
-		else if (values->at(i).first == 2 && botIndex == -1)
-			botIndex = i;
-
-		if (topIndex != -1 && botIndex != -1)
+		if (values->at(i).first != previous)
+		{
+			boundaries.push_back(i);
+			previous = values->at(i).first;
+		}
+		if (boundaries.size() == levels)
 			break;
 	}
 
+	boundaries.push_back(values->size());
+
 	if (print)
-		std::cout << "Easy:   " << topIndex << "\nMedium: " << botIndex - topIndex << "\nHard:   " << values->size() - botIndex << "\nTotal:  " << values->size() << "\n\n\n";
+		for (int i = 1; i < boundaries.size(); i++)
+			std::cout << "Level " << i << ": " << boundaries[i] - boundaries[i - 1] << "\n";
 }
 
 int selectWord(std::vector<std::pair<int, int>>* values, int difficulty)
@@ -44,7 +49,7 @@ int selectWord(std::vector<std::pair<int, int>>* values, int difficulty)
 
 	if (difficulty != previousDifficulty)
 	{
-		std::cout << "Selecting from a pool of: [" << size << "] level [" << difficulty << "] words.\n\n";
+		std::cout << "\nSelecting from a pool of: [" << size << "] level [" << difficulty + 1 << "] words.\n\n";
 
 		previousDifficulty = difficulty;
 	}
@@ -54,21 +59,20 @@ int selectWord(std::vector<std::pair<int, int>>* values, int difficulty)
 	return values->at(selection).second;
 }
 
-int setDifficulty()
+int setDifficulty(int levels)
 {
 	int input = 0;
 
 	while (true)
 	{
-		std::cout << "\nEnter a new difficulty level (0, 1, 2): ";
+		std::cout << "\nEnter a new difficulty level (1 - " << levels << "): ";
 
 		input = _getch();
 
-		std::cout << (char)input << "\n\n";
+		for (int i = 1; i < levels + 1; i++)
+			if (input == (i + 48))
+				return input - 1;
 
-		if (input == 48 || input == 49 || input == 50 || input == 27)
-			return input;
-		else
-			std::cout << "Invalid selection.\n";
+		std::cout << "Invalid selection.\n";
 	}
 }

@@ -4,6 +4,14 @@
 #include <vector>
 #include <string>
 
+struct ValuesData
+{
+	int levelCount = 0;
+
+	std::vector<std::pair<int, int>> values;
+	std::vector<std::string> words;
+};
+
 std::vector<std::string> loadWords(std::string path)
 {
 	std::vector<std::string> words;
@@ -30,6 +38,8 @@ std::vector<std::pair<int, int>> loadValues(std::string path)
 	std::ifstream file(path);
 
 	int index = 0;
+	bool first = true;
+
 	while (std::getline(file, value))
 	{
 		int valueInt = std::stoi(value);
@@ -42,4 +52,27 @@ std::vector<std::pair<int, int>> loadValues(std::string path)
 	file.close();
 
 	return values;
+}
+
+int loadDifficulty(std::string path)
+{
+	std::ifstream file(path);
+	std::string difficulty;
+
+	std::getline(file, difficulty);
+
+	file.close();
+
+	return std::stoi(difficulty);
+}
+
+ValuesData loadData(std::string wordsPath, std::string valuesPath)
+{
+	ValuesData data;
+
+	data.words = loadWords(wordsPath);
+	data.values = loadValues(valuesPath);
+	data.levelCount = loadDifficulty(valuesPath);
+
+	return data;
 }

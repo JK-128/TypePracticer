@@ -34,6 +34,12 @@ for word in wordList:
         print(percent)
         previous = percent
 
+first = True
 with open("rowClassified.txt", "w") as myfile:
+    
+    if(first):
+        myfile.write('3\n')
+        first = False
+        
     myfile.write('\n'.join(str(value) for value in values))
 
