@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Graphics/Window.h"
 
 int main()
 {
@@ -6,14 +7,18 @@ int main()
 
 	game.setup("Word Lists/lowercaseAll.txt", "Word Lists/rowClassified.txt");
 
+	Window window(640, 480, "Typing Practice");
+
 	while (!game.shouldExit()) 
 	{
 		game.nextSet();
+
+		window.draw();
 	}
 }
 
-
-// TO DO: Clean everything up and improve before the refactor.
-// TO DO: Split everything into functions in preparation for addition of graphics so 
-//        logic and function calls are the same, just function bodies need to be changed.
-// TO DO: Bring in something like SFML or even OpenGL to make it actually look nice.
+//TO DO: Git branch to make a new branch to develop graphics with.
+//       Develop these graphics (90% portable from previous projects).
+//       Make any necessary changes/improvements.
+//       Merge branch.
+//       Done.

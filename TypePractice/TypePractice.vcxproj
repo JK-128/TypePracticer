@@ -104,10 +104,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\joe\Desktop\Works\TypePractice\TypePractice\Dependencies\freetype\include;C:\Users\joe\Desktop\Works\TypePractice\TypePractice\Dependencies\glfw-3.3.6.bin.WIN64\glfw-3.3.6.bin.WIN64\include;C:\Users\joe\Desktop\Works\TypePractice\TypePractice\Dependencies\glad\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Users\joe\Desktop\Works\TypePractice\TypePractice\Dependencies\freetype\objs;C:\Users\joe\Desktop\Works\TypePractice\TypePractice\Dependencies\freetype\objs\x64\Debug;C:\Users\joe\Desktop\Works\TypePractice\TypePractice\Dependencies\glfw-3.3.6.bin.WIN64\glfw-3.3.6.bin.WIN64\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -118,6 +121,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\joe\Desktop\Works\TypePractice\TypePractice\Dependencies\freetype\include;C:\Users\joe\Desktop\Works\TypePractice\TypePractice\Dependencies\glfw-3.3.6.bin.WIN64\glfw-3.3.6.bin.WIN64\include;C:\Users\joe\Desktop\Works\TypePractice\TypePractice\Dependencies\glad\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -130,8 +134,10 @@
     <ClCompile Include="Core\ListLoading.cpp" />
     <ClCompile Include="Core\Timing.cpp" />
     <ClCompile Include="Core\Utilities.cpp" />
+    <ClCompile Include="Dependencies\glad.c" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Graphics\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Definitions.h" />
@@ -139,6 +145,7 @@
     <ClInclude Include="Core\Timing.h" />
     <ClInclude Include="Core\Utilities.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Graphics\Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

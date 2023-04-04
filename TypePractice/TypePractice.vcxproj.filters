@@ -30,6 +30,12 @@
     <ClCompile Include="Core\Utilities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Graphics\Window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dependencies\glad.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\ListLoading.h">
@@ -45,6 +51,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
