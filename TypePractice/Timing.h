@@ -19,20 +19,23 @@ void printTime(timedata td)
 	std::cout << td.hour << ":" << td.minute << ":" << td.second << "." << td.mSecond << "\n";
 }
 
-void printTimePretty(timedata td)
+std::string getTimePretty(timedata td)
 {
-	std::cout << "Completed in: ";
+	std::string timeStr = "";
 	//Print out the time data using words.
 	if (td.hour != 0)
-		std::cout << td.hour << "Hours, ";
+		timeStr.append(std::to_string(td.hour) + "Hours, ");
 	if (td.minute != 0)
-		std::cout << td.minute << " minutes, and ";
+		timeStr.append(td.minute + " minutes, and ");
 	if (td.second != 0)
 	{
-		std::cout << td.second << "." << td.mSecond << " seconds.\n";
+		timeStr.append(std::to_string(td.second) + ".");
+		timeStr.append(std::to_string(td.mSecond) + " seconds.");
 	}
 	else
-		std::cout << td.mSecond << " MS.\n";
+		timeStr.append(std::to_string(td.mSecond) + " MS.");
+
+	return timeStr;
 }
 
 float getWPM(timedata duration, int wordCount)

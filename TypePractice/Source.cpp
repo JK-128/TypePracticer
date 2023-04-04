@@ -6,6 +6,7 @@ struct Attempt
 {
 	std::string input;
 	int code;
+	int mistakes = -1;
 	timedata duration;
 };
 
@@ -67,8 +68,12 @@ int main()
 
 		input = attempt.code;
 
-		printTimePretty(attempt.duration);
-		std::cout << "WPM: " << getWPM(attempt.duration, sentenceLength) << "\n";
+		if (attempt.mistakes != -1)
+		{
+			std::cout << "Completed in: " << getTimePretty(attempt.duration) << "\n";
+			std::cout << "With " << attempt.mistakes << " mistakes.\n";
+			std::cout << "WPM: " << getWPM(attempt.duration, sentenceLength) << "\n\n";
+		}
 	}
 }
 
@@ -113,9 +118,15 @@ Attempt userAttempt(std::string word)
 			count = (int)word.length() - 1;
 	}
 	attempt.code = input;
-	
+
+	//For typing too much/little
+	if (word.length() != attempt.input.length())
+		mistakes += abs((int)word.length() - (int)attempt.input.length());
+
 	if (hasTyped)
 	{
+		attempt.mistakes = mistakes;
+
 		if (mistakes > 0)
 		{
 			std::cout << "\n\n[";
