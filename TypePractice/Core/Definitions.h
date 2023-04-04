@@ -1,6 +1,6 @@
 #pragma once
 
-enum key
+static enum key
 {
 	keyNext   = 13,
 	keyExit   = 27,

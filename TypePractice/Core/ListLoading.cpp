@@ -1,16 +1,4 @@
-#pragma once
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <string>
-
-struct ValuesData
-{
-	int levelCount = 0;
-
-	std::vector<std::pair<int, int>> values;
-	std::vector<std::string> words;
-};
+#include "ListLoading.h"
 
 std::vector<std::string> loadWords(std::string path)
 {

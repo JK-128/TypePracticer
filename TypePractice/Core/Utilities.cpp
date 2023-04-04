@@ -1,10 +1,6 @@
-#pragma once
-#include "Definitions.h"
-#include <algorithm>
-#include <vector>
-#include <conio.h>
+#include "Utilities.h"
 
-void sortValues(std::vector<std::pair<int, int>>* values, int levels, bool print = false)
+void sortValues(std::vector<std::pair<int, int>>* values, int levels, bool print)
 {
 	std::sort(values->begin(), values->end());
 
@@ -14,7 +10,7 @@ void sortValues(std::vector<std::pair<int, int>>* values, int levels, bool print
 
 	int previous = values->at(0).first;
 
-	for(int i = 1; i < values->size(); i++)
+	for (int i = 1; i < values->size(); i++)
 	{
 		if (values->at(i).first != previous)
 		{
@@ -69,6 +65,8 @@ int setDifficulty(int levels)
 		std::cout << "\nEnter a new difficulty level (1 - " << levels << "): ";
 
 		input = _getch();
+
+		std::cout << input - 48 << "\n";
 
 		for (int i = 1; i < levels + 1; i++)
 			if (input == (i + keyOffset))

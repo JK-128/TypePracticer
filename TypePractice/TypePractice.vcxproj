@@ -127,13 +127,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Core\ListLoading.cpp" />
+    <ClCompile Include="Core\Timing.cpp" />
+    <ClCompile Include="Core\Utilities.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Definitions.h" />
-    <ClInclude Include="ListLoading.h" />
-    <ClInclude Include="Timing.h" />
-    <ClInclude Include="Utilities.h" />
+    <ClInclude Include="Core\Definitions.h" />
+    <ClInclude Include="Core\ListLoading.h" />
+    <ClInclude Include="Core\Timing.h" />
+    <ClInclude Include="Core\Utilities.h" />
+    <ClInclude Include="Game.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
