@@ -1,12 +1,12 @@
 #include "ListLoading.h"
 #include "Utilities.h"
-
-#include <time.h>
+#include "Timing.h"
 
 struct Attempt
 {
 	std::string input;
 	int code;
+	timedata duration;
 };
 
 Attempt userAttempt(std::string word);
@@ -42,7 +42,7 @@ int main()
 
 			input = _getch();
 
-			if (input - keyOffset >= 0 && input - keyOffset < 10)
+			if (input - keyOffset > 0 && input - keyOffset < 10)
 				sentenceLength = input - keyOffset;
 
 			std::cout << "New sentence length: " << sentenceLength << "\n\n";
@@ -63,7 +63,12 @@ int main()
 
 		std::cout << sentence << "\n";
 
-		input = userAttempt(sentence).code;
+		Attempt attempt = userAttempt(sentence);
+
+		input = attempt.code;
+
+		printTimePretty(attempt.duration);
+		std::cout << "WPM: " << getWPM(attempt.duration, sentenceLength) << "\n";
 	}
 }
 
@@ -78,12 +83,16 @@ Attempt userAttempt(std::string word)
 
 	std::vector<int> mistakeIndexes;
 
+	timedata preAttempt = getCurrentTime();
+
+	bool hasTyped = false;
 	while (input != keyLevel && input != keyExit && input != keyNext && input != keyLength)
 	{
 		input = _getch();
 
 		if (input != keyNext && input != keyLevel && input != keyLength)
 		{
+			hasTyped = true;
 			attempt.input.push_back((char)input);
 
 			if (word.at(count) == (char)input)
@@ -105,7 +114,7 @@ Attempt userAttempt(std::string word)
 	}
 	attempt.code = input;
 	
-	if (attempt.code != keyExit && attempt.code != keyLevel && attempt.code != keyLength)
+	if (hasTyped)
 	{
 		if (mistakes > 0)
 		{
@@ -116,20 +125,20 @@ Attempt userAttempt(std::string word)
 			std::cout << "]\n";
 		}
 
-		if (attempt.input == word)
-			std::cout << "\ncorrect\n\n";
-		else
-			std::cout << "\nIncorrect\n\n";
-
 		int accuracy = int((1.0f - ((float)mistakes / (float)letters)) * 100.0f);
 
-		std::cout << accuracy << "% accuracy.\n";
+		std::cout << "\n" << accuracy << "% accuracy.\n\n";
 	}
+
+	timedata duration = getTimeDifference(preAttempt);
+	
+	attempt.duration = duration;
 
 	return attempt;
 }
 
 // TO DO: Put in performance trackers (time, mistakes, etc).
+// TO DO: Clean everything up and improve before the refactor.
 // TO DO: Split everything into functions in preparation for addition of graphics so 
 //        logic and function calls are the same, just function bodies need to be changed.
 // TO DO: Bring in something like SFML or even OpenGL to make it actually look nice.
