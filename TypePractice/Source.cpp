@@ -5,8 +5,10 @@
 struct Attempt
 {
 	std::string input;
+
 	int code;
 	int mistakes = -1;
+	
 	timedata duration;
 };
 
@@ -88,6 +90,7 @@ Attempt userAttempt(std::string word)
 
 	std::vector<int> mistakeIndexes;
 
+	//Gathers a value for the time the attempt begins.
 	timedata preAttempt = getCurrentTime();
 
 	bool hasTyped = false;
@@ -97,7 +100,13 @@ Attempt userAttempt(std::string word)
 
 		if (input != keyNext && input != keyLevel && input != keyLength)
 		{
-			hasTyped = true;
+			if (!hasTyped)
+			{
+				//Updates the start time based on the first keystroke.
+				preAttempt = getCurrentTime();
+				hasTyped = true;
+			}
+
 			attempt.input.push_back((char)input);
 
 			if (word.at(count) == (char)input)
@@ -119,7 +128,7 @@ Attempt userAttempt(std::string word)
 	}
 	attempt.code = input;
 
-	//For typing too much/little
+	//Gathers mistakes for typing too much/little
 	if (word.length() != attempt.input.length())
 		mistakes += abs((int)word.length() - (int)attempt.input.length());
 
@@ -148,7 +157,6 @@ Attempt userAttempt(std::string word)
 	return attempt;
 }
 
-// TO DO: Put in performance trackers (time, mistakes, etc).
 // TO DO: Clean everything up and improve before the refactor.
 // TO DO: Split everything into functions in preparation for addition of graphics so 
 //        logic and function calls are the same, just function bodies need to be changed.

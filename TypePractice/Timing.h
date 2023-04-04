@@ -96,10 +96,10 @@ timedata getTimeDifference(timedata td1)
 		diffMS = std::stoll(diffMSStr);
 	}
 
-	tdR.hour    = diffH;
-	tdR.minute  = diffM;
-	tdR.second  = diffS;
-	tdR.mSecond = diffMS;
+	tdR.hour    = (int)diffH;
+	tdR.minute  = (int)diffM;
+	tdR.second  = (int)diffS;
+	tdR.mSecond = (int)diffMS;
 	tdR.clock   = -1;
 
 	return tdR;
