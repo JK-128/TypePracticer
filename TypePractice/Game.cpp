@@ -155,6 +155,7 @@ void Game::nextSet()
 {
 	if (m_attempt.code == keyLevel)
 		updateDifficulty();
+
 	if (m_attempt.code == keyLength)
 		updateSentenceLength();
 
@@ -171,9 +172,9 @@ bool Game::shouldExit()
 	return(m_attempt.code == keyExit);
 }
 
-void gameLoop(Game* game)
+void gameLoop(Game* game, std::string wordsPath, std::string valuesPath)
 {
-	game->setup("Word Lists/lowercaseAll.txt", "Word Lists/rowClassified.txt");
+	game->setup(wordsPath, valuesPath);
 
 	while (!game->shouldExit())
 	{

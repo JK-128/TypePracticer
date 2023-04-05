@@ -1,4 +1,4 @@
-#define GAME_ACTIVE 1
+#define GAME_ACTIVE   1
 #define WINDOW_ACTIVE 1
 
 #include "Game.h"
@@ -9,9 +9,12 @@ int main()
 {
 	Game game;
 
+	std::string wordsPath  = "Word Lists/lowercaseAll.txt";
+	std::string valuesPath = "Word Lists/rowClassified.txt";
+
 	std::thread gameThread;
 	if (GAME_ACTIVE)
-		gameThread = std::thread(gameLoop, &game);
+		gameThread = std::thread(gameLoop, &game, wordsPath, valuesPath);
 
 	bool gameRunning = true;
 
@@ -33,3 +36,8 @@ int main()
 	if(GAME_ACTIVE)
 		gameThread.join();
 }
+
+/*	Port over shader code.
+*	Port over text rendering code.
+*	Integrate with the 'game' so far.
+*/

@@ -37,4 +37,4 @@ public:
 	bool shouldExit();
 };
 
-void gameLoop(Game* game);
+void gameLoop(Game* game, std::string wordPath, std::string valuesPath);
