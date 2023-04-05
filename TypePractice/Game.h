@@ -3,6 +3,8 @@
 #include "Core/ListLoading.h"
 #include "Core/Timing.h"
 #include "Core/Utilities.h"
+#include "Graphics/TextRenderer.h"
+#include "Graphics/Window.h"
 
 struct Attempt
 {
@@ -24,17 +26,25 @@ private:
 
 	ValuesData m_data;
 	Attempt m_attempt;
+	TextRenderer m_tr;
+	
+	Window* m_window;
+
+	bool m_finished = true;
 
 public:
 	void setup(std::string wordsPath, std::string valuesPath);
 	void setNextSentence();
+	void passWindow(Window* window);
+	void update();
+	void handleInput();
+
 	void attempt();
 	void showAttemptStats();
 	void updateDifficulty();
 	void updateSentenceLength();
 	void nextSet();
 
+
 	bool shouldExit();
 };
-
-void gameLoop(Game* game, std::string wordPath, std::string valuesPath);

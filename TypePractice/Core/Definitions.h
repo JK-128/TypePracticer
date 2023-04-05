@@ -2,7 +2,7 @@
 
 static enum key
 {
-	keyNext   = 13,
+	keyNext   = 257,
 	keyExit   = 27,
 	keyLevel  = 47,
 	keyOffset = 48,

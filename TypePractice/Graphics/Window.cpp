@@ -1,5 +1,7 @@
 #include "Window.h"
 
+std::vector<int> keyActions;
+
 Window::Window(int width, int height, std::string title)
 {
 	m_width  = width;
@@ -17,6 +19,8 @@ Window::Window(int width, int height, std::string title)
 	m_window = glfwCreateWindow(m_width, m_height, m_title.c_str(), 0, 0);
 
 	glfwMakeContextCurrent(m_window);
+
+	glfwSetKeyCallback(m_window, key_callback);
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 		return;
@@ -67,4 +71,15 @@ void Window::draw()
 	clear();
 	swap();
 	poll();
+}
+
+bool Window::keyPressed(int key)
+{
+	return (glfwGetKey(m_window, key) == GLFW_PRESS);
+}
+
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	if (action == GLFW_PRESS)
+		keyActions.push_back(key);
 }

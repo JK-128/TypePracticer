@@ -2,6 +2,9 @@
 #include <iostream>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <vector>
+
+extern std::vector<int> keyActions;
 
 class Window
 {
@@ -19,6 +22,7 @@ public:
 	Window(int width, int height, std::string title);
 	
 	bool exists();
+	bool keyPressed(int key);
 
 	void poll();
 	void swap();
@@ -27,3 +31,4 @@ public:
 	void draw();
 };
 
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);

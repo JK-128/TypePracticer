@@ -37,6 +37,7 @@ void Game::setNextSentence()
 
 void Game::attempt()
 {
+	/*
 	Attempt attempt;
 
 	std::vector<int> mistakeIndexes;
@@ -112,6 +113,7 @@ void Game::attempt()
 	attempt.duration = duration;
 
 	m_attempt = attempt;
+	*/
 }
 
 void Game::showAttemptStats()
@@ -130,7 +132,7 @@ void Game::showAttemptStats()
 
 void Game::updateDifficulty()
 {
-	m_attempt.code = setDifficulty(m_data.levelCount);
+	m_attempt.code = 1;// setDifficulty(m_data.levelCount);
 
 	if (m_attempt.code != keyExit)
 	{
@@ -151,33 +153,40 @@ void Game::updateSentenceLength()
 	std::cout << "New sentence length: " << m_sentenceLength << "\n\n";
 }
 
-void Game::nextSet()
+
+void Game::passWindow(Window* window)
 {
-	if (m_attempt.code == keyLevel)
-		updateDifficulty();
+	m_window = window;
+}
 
-	if (m_attempt.code == keyLength)
-		updateSentenceLength();
+void Game::update()
+{
+	handleInput();
 
-	if (m_attempt.code != keyExit)
+	if (m_finished)
 	{
 		setNextSentence();
-		attempt();
-		showAttemptStats();
+		m_finished = false;
 	}
+
+	m_tr.renderText(m_sentence, 0.0f, 0.0f);
+}
+
+void Game::handleInput()
+{
+	for (int i = 0; i < keyActions.size(); i++)
+	{
+		if (keyActions[i] == keyExit)
+			m_attempt.code = keyExit;
+
+		else if (keyActions[i] == keyNext)
+			m_finished = true;
+	}
+
+	keyActions.clear();
 }
 
 bool Game::shouldExit()
 {
 	return(m_attempt.code == keyExit);
-}
-
-void gameLoop(Game* game, std::string wordsPath, std::string valuesPath)
-{
-	game->setup(wordsPath, valuesPath);
-
-	while (!game->shouldExit())
-	{
-		game->nextSet();
-	}
 }
