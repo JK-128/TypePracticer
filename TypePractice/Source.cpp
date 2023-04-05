@@ -1,5 +1,8 @@
 #include "Game.h"
 #include "Graphics/Window.h"
+#include <thread>
+
+void gameLoop(Game* game);
 
 int main()
 {
@@ -9,16 +12,23 @@ int main()
 
 	Window window(640, 480, "Typing Practice");
 
-	while (!game.shouldExit()) 
-	{
-		game.nextSet();
+	std::thread gameThread(gameLoop, &game);
 
+	while (window.exists()) 
+	{
 		window.draw();
 	}
 }
 
-//TO DO: Git branch to make a new branch to develop graphics with.
-//       Develop these graphics (90% portable from previous projects).
+void gameLoop(Game* game)
+{
+	while (!game->shouldExit())
+	{
+		game->nextSet();
+	}
+}
+
+//TO DO: Develop these graphics (90% portable from previous projects).
 //       Make any necessary changes/improvements.
 //       Merge branch.
 //       Done.
