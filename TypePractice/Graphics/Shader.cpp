@@ -4,14 +4,23 @@ Shader::Shader(std::string vertPath, std::string fragPath)
 {
 	int success;
 
-	const char* vertString = loadSource(vertPath).c_str();
-	const char* fragString = loadSource(fragPath).c_str();
+	std::string vertString = loadSource(vertPath);
+	std::string fragString = loadSource(fragPath);
+
+	const char* vertSource = vertString.c_str();
+	const char* fragSource = fragString.c_str();
+
+	if (vertSource == "NULL" || fragSource == "NULL")
+	{
+		std::cout << "Shader source files not found.\n";
+		return;
+	}
 
 	m_vert = glCreateShader(GL_VERTEX_SHADER);
 	m_frag = glCreateShader(GL_FRAGMENT_SHADER);
 
-	glShaderSource(m_vert, 1, &vertString, NULL);
-	glShaderSource(m_frag, 1, &fragString, NULL);
+	glShaderSource(m_vert, 1, &vertSource, NULL);
+	glShaderSource(m_frag, 1, &fragSource, NULL);
 
 	glCompileShader(m_vert);
 	glGetShaderiv(m_vert, GL_COMPILE_STATUS, &success);
@@ -61,4 +70,14 @@ GLuint* Shader::get()
 void Shader::bind()
 {
 	glUseProgram(m_program);
+}
+
+void Shader::setMat4(std::string name, glm::mat4 value)
+{
+	glUniformMatrix4fv(glGetUniformLocation(m_program, name.c_str()), 1, GL_FALSE, &value[0][0]);
+}
+
+void Shader::setVec4(std::string name, glm::vec4 value)
+{
+	glUniform4fv(glGetUniformLocation(m_program, name.c_str()), 1, &value[0]);
 }

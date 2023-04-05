@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 #include <glad/glad.h>
+#include "../Dependencies/glm/glm/glm.hpp"
 
 class Shader
 {
@@ -21,5 +22,8 @@ public:
 	GLuint* get();
 
 	void bind();
+
+	void setMat4(std::string name, glm::mat4 value);
+	void setVec4(std::string name, glm::vec4 value);
 };
 

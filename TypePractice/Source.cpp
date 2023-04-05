@@ -1,8 +1,10 @@
-#define GAME_ACTIVE   1
+#define GAME_ACTIVE   0
 #define WINDOW_ACTIVE 1
 
 #include "Game.h"
 #include "Graphics/Window.h"
+#include "Graphics/Shader.h"
+#include "Graphics/TextRenderer.h"
 #include <thread>
 
 int main()
@@ -22,13 +24,25 @@ int main()
 	{
 		Window window(640, 480, "Typing Practice");
 
+		windowWidth  = 640;
+		windowHeight = 480;
+
+		Shader shaderTest("Shaders/textVert.glsl", "Shaders/textFrag.glsl");
+
+		TextRenderer tr;
+
 		while (window.exists())
 		{
-			window.draw();
+			window.clear();
+
+			tr.renderText("TEST0123456789", 0.5f, 0.5f);
+
+			window.swap();
+			window.poll();
 
 			gameRunning = game.shouldExit();
 
-			if (!gameRunning)
+			if (!gameRunning && GAME_ACTIVE)
 				window.close();
 		}
 	}

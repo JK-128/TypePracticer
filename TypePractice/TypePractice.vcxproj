@@ -136,8 +136,10 @@
     <ClCompile Include="Core\Utilities.cpp" />
     <ClCompile Include="Dependencies\glad.c" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Graphics\Shader.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Graphics\Window.cpp" />
+    <ClCompile Include="Graphics\TextRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Definitions.h" />
@@ -146,6 +148,8 @@
     <ClInclude Include="Core\Utilities.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Graphics\Window.h" />
+    <ClInclude Include="Graphics\Shader.h" />
+    <ClInclude Include="Graphics\TextRenderer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
