@@ -37,3 +37,4 @@ public:
 	bool shouldExit();
 };
 
+void gameLoop(Game* game);

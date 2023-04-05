@@ -158,12 +158,25 @@ void Game::nextSet()
 	if (m_attempt.code == keyLength)
 		updateSentenceLength();
 
-	setNextSentence();
-	attempt();
-	showAttemptStats();
+	if (m_attempt.code != keyExit)
+	{
+		setNextSentence();
+		attempt();
+		showAttemptStats();
+	}
 }
 
 bool Game::shouldExit()
 {
 	return(m_attempt.code == keyExit);
+}
+
+void gameLoop(Game* game)
+{
+	game->setup("Word Lists/lowercaseAll.txt", "Word Lists/rowClassified.txt");
+
+	while (!game->shouldExit())
+	{
+		game->nextSet();
+	}
 }

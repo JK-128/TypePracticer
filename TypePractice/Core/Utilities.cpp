@@ -72,6 +72,9 @@ int setDifficulty(int levels)
 			if (input == (i + keyOffset))
 				return input - 1;
 
+		if (input == keyExit)
+			return keyExit;
+
 		std::cout << "Invalid selection.\n";
 	}
 }

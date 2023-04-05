@@ -1,34 +1,35 @@
+#define GAME_ACTIVE 1
+#define WINDOW_ACTIVE 1
+
 #include "Game.h"
 #include "Graphics/Window.h"
 #include <thread>
-
-void gameLoop(Game* game);
 
 int main()
 {
 	Game game;
 
-	game.setup("Word Lists/lowercaseAll.txt", "Word Lists/rowClassified.txt");
+	std::thread gameThread;
+	if (GAME_ACTIVE)
+		gameThread = std::thread(gameLoop, &game);
 
-	Window window(640, 480, "Typing Practice");
+	bool gameRunning = true;
 
-	std::thread gameThread(gameLoop, &game);
-
-	while (window.exists()) 
+	if (WINDOW_ACTIVE)
 	{
-		window.draw();
-	}
-}
+		Window window(640, 480, "Typing Practice");
 
-void gameLoop(Game* game)
-{
-	while (!game->shouldExit())
-	{
-		game->nextSet();
-	}
-}
+		while (window.exists())
+		{
+			window.draw();
 
-//TO DO: Develop these graphics (90% portable from previous projects).
-//       Make any necessary changes/improvements.
-//       Merge branch.
-//       Done.
+			gameRunning = game.shouldExit();
+
+			if (!gameRunning)
+				window.close();
+		}
+	}
+
+	if(GAME_ACTIVE)
+		gameThread.join();
+}
