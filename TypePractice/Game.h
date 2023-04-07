@@ -24,6 +24,8 @@ private:
 
 	std::string m_sentence;
 
+	std::vector<int> m_mistakes;
+
 	ValuesData m_data;
 	Attempt m_attempt;
 
@@ -39,6 +41,8 @@ private:
 public:
 	int getInput();
 
+	float getAccuracy();
+	
 	void setup(std::string wordsPath, std::string valuesPath);
 	void setNextSentence();
 	void passWindow(Window* window);
