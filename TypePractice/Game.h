@@ -28,8 +28,6 @@ private:
 	Attempt m_attempt;
 
 	TextRenderer m_tr;
-	TextRenderer m_attemptText;
-	TextRenderer m_clockText;
 
 	timedata m_clock;
 
@@ -39,15 +37,16 @@ private:
 	bool m_hasTyped = false;
 
 public:
+	int getInput();
+
 	void setup(std::string wordsPath, std::string valuesPath);
 	void setNextSentence();
 	void passWindow(Window* window);
 	void update();
 	void handleInput();
-
-	int getInput();
-
 	void attempt();
+
+
 	void showAttemptStats();
 	void updateDifficulty();
 	void updateSentenceLength();

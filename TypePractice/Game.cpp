@@ -165,6 +165,7 @@ void Game::update()
 	if (m_finished)
 	{
 		m_attempt.input.clear();
+		m_attempt.mistakes = 0;
 
 		m_finished = false;
 		m_hasTyped = false;
@@ -175,16 +176,17 @@ void Game::update()
 	attempt();
 
 	m_tr.renderText(m_sentence, 0.0f, 0.0f);
-	m_attemptText.renderText(m_attempt.input, 0.0f, 0.0f, 1.0f, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+	m_tr.renderText(m_attempt.input, 0.0f, 0.0f, 1.0f, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+
+	if (m_attempt.mistakes > 0)
+		m_tr.renderText(std::to_string(m_attempt.mistakes), 0.0f, 400.0f);
 
 	if (m_hasTyped)
 	{
 		timedata diff = getTimeDifference(m_clock);
 		std::string diffStr = getTime(diff);
 
-		std::cout << diffStr << "\n";
-
-		m_clockText.renderText(diffStr, 0.0f, 450.0f);
+		m_tr.renderText(diffStr, 0.0f, 450.0f);
 	}
 }
 
@@ -214,6 +216,9 @@ void Game::attempt()
 
 	if (key != GLFW_KEY_SPACE)
 		key += 32;
+
+	if (key != m_sentence[m_attempt.input.size()])
+		m_attempt.mistakes++;
 
 	m_attempt.input.push_back((char)key);
 }
