@@ -10,3 +10,5 @@ void sortValues(std::vector<std::pair<int, int>>* values, int levels, bool print
 int selectWord(std::vector<std::pair<int, int>>* values, int difficulty);
 
 int setDifficulty(int levels);
+
+std::string trimFloat(std::string input);

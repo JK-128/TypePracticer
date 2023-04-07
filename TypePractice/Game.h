@@ -5,6 +5,7 @@
 #include "Core/Utilities.h"
 #include "Graphics/TextRenderer.h"
 #include "Graphics/Window.h"
+#include <math.h>
 
 struct Attempt
 {
@@ -19,7 +20,7 @@ struct Attempt
 class Game
 {
 private:
-	int m_sentenceLength = 3;
+	int m_sentenceLength = 20;
 	int m_level;
 
 
@@ -45,6 +46,7 @@ private:
 
 	float m_textScale  =  1.0f;
 	float m_textOffset = 10.0f;
+	float m_wordsPerMinute = 0.0f;
 
 public:
 	int getInput();

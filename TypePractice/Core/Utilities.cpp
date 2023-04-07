@@ -78,3 +78,18 @@ int setDifficulty(int levels)
 		std::cout << "Invalid selection.\n";
 	}
 }
+
+std::string trimFloat(std::string input)
+{
+	int index = 0;
+	for (int i = 0; i < input.length(); i++)
+		if (input[i] == '.')
+		{
+			index = i;
+			break;
+		}
+
+	std::string trimmed = input.substr(0, index + 2);
+
+	return trimmed;
+}

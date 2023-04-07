@@ -187,8 +187,13 @@ void Game::update()
 
 		float accuracy = getAccuracy();
 
+		if (m_attempt.input[m_attempt.input.size() - 1] == ' ')
+			m_wordsPerMinute = getWPM(diff, m_attempt.input.size());
+
+		std::string accString = std::to_string(accuracy);
+
 		m_tr.renderText(diffStr, 0.0f, 450.0f);
-		m_tr.renderText(std::to_string(accuracy), 0.0f, 350.0f);
+		m_tr.renderText(trimFloat(accString) + "%", 200.0f, 450.0f);
 	}
 
 	if (m_mistakes.size() > 0)
@@ -306,11 +311,11 @@ void Game::printText(std::string text, glm::vec4 color, bool setSpaces)
 
 		for (int i = 0; i < text.length(); i++)
 			if (text[i] == ' ')
-				m_spaces.push_back(i);
+				m_spaces.push_back(i + 1);
 
 		int lastBreak = 0;
 		for (int i = 0; i < m_spaces.size(); i++)
-			if (m_spaces[i] - lastBreak > 15)
+			if (m_spaces[i] - lastBreak > 25)
 			{
 				m_breaks.push_back(m_spaces[i]);
 				lastBreak = m_spaces[i];
@@ -333,7 +338,7 @@ void Game::printSentence(glm::vec4 color)
 {
 	for (int i = 0; i < m_sentenceRender.size(); i++)
 	{
-		m_tr.renderText(m_sentenceRender[i], m_textOffset, 200.0f - (50.0f * i), m_textScale, color);
+		m_tr.renderText(m_sentenceRender[i], m_textOffset, 400.0f - (50.0f * i), m_textScale, color);
 	}
 }
 
