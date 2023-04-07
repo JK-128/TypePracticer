@@ -44,7 +44,7 @@ void TextRenderer::loadFont(std::string path)
 		return;
 	}
 
-	FT_Set_Pixel_Sizes(m_face, 0, 48);
+	FT_Set_Pixel_Sizes(m_face, 0, 32);
 
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
@@ -75,7 +75,6 @@ void TextRenderer::loadFont(std::string path)
 			glm::ivec2(bitmap.width, bitmap.rows),
 			glm::ivec2(m_face->glyph->bitmap_left, m_face->glyph->bitmap_top)
 		};
-
 		characters.insert(std::pair<char, Character>(c, character));
 	}
 
@@ -96,6 +95,9 @@ void TextRenderer::renderText(std::string text, float x, float y, float scale, g
 
 	for (c = text.begin(); c != text.end(); c++)
 	{
+		if (*c == '#')
+			continue;
+
 		Character ch = characters[*c];
 
 		float xpos = x + ch.bearing.x * scale;

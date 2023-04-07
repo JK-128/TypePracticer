@@ -22,9 +22,14 @@ private:
 	int m_sentenceLength = 3;
 	int m_level;
 
+
 	std::string m_sentence;
 
 	std::vector<int> m_mistakes;
+	std::vector<int> m_spaces;
+	std::vector<int> m_breaks;
+
+	std::vector<std::string> m_sentenceRender;
 
 	ValuesData m_data;
 	Attempt m_attempt;
@@ -38,6 +43,9 @@ private:
 	bool m_finished = true;
 	bool m_hasTyped = false;
 
+	float m_textScale  =  1.0f;
+	float m_textOffset = 10.0f;
+
 public:
 	int getInput();
 
@@ -49,7 +57,11 @@ public:
 	void update();
 	void handleInput();
 	void attempt();
+	void printSentence(glm::vec4 color);
 
+	void printText(std::string text, glm::vec4 color = glm::vec4(1.0f), bool setSpaces = false);
+
+	float getLetterX(int index);
 
 	void showAttemptStats();
 	void updateDifficulty();

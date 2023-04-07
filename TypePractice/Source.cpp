@@ -33,3 +33,11 @@ int main()
 			window.close();
 	}
 }
+
+// TO DO:
+/* + Make sure that sentences of any length fit on screen.
+*		+ Split into newlines and shrink.
+*  + Update performance trackers to be displayed after completing a sentence
+*    before moving on to the next one.
+*  + Beautify and think of any new features wanted.
+*/

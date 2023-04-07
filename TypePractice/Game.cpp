@@ -151,7 +151,6 @@ void Game::updateSentenceLength()
 	std::cout << "New sentence length: " << m_sentenceLength << "\n\n";
 }
 
-
 void Game::passWindow(Window* window)
 {
 	m_window = window;
@@ -165,7 +164,9 @@ void Game::update()
 	if (m_finished)
 	{
 		m_mistakes.clear();
+		m_sentenceRender.clear();
 		m_attempt.input.clear();
+
 		m_attempt.mistakes = 0;
 
 		m_finished = false;
@@ -176,9 +177,8 @@ void Game::update()
 
 	attempt();
 
-	m_tr.renderText(m_sentence, 0.0f, 10.0f);
-	m_tr.renderText(m_attempt.input, 0.0f, 10.0f, 1.0f, glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
-
+	printText(m_sentence, glm::vec4(1.0f), true);
+	printText(m_attempt.input, glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
 
 	if (m_hasTyped)
 	{
@@ -212,8 +212,7 @@ void Game::update()
 			if (!isMistake)
 				mistakesString += " ";
 		}
-
-		m_tr.renderText(mistakesString, 0.0f, 10.0f, 1.0f, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+		printText(mistakesString, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
 	}
 }
 
@@ -290,4 +289,55 @@ int Game::getInput()
 bool Game::shouldExit()
 {
 	return(m_attempt.code == keyExit);
+}
+
+void Game::printText(std::string text, glm::vec4 color, bool setSpaces)
+{
+	int difference = m_sentence.length() - text.length();
+	for (int i = 0; i < difference; i++)
+		text += '#';
+
+	if (setSpaces)
+	{
+		m_spaces.clear();
+		m_breaks.clear();
+
+		m_breaks.push_back(0);
+
+		for (int i = 0; i < text.length(); i++)
+			if (text[i] == ' ')
+				m_spaces.push_back(i);
+
+		int lastBreak = 0;
+		for (int i = 0; i < m_spaces.size(); i++)
+			if (m_spaces[i] - lastBreak > 15)
+			{
+				m_breaks.push_back(m_spaces[i]);
+				lastBreak = m_spaces[i];
+			}
+
+		m_breaks.push_back(text.length());
+	}
+
+	for (int i = 1; i < m_breaks.size(); i++)
+	{
+		std::string newLine = text.substr(m_breaks[i - 1], m_breaks[i] - m_breaks[i - 1]);
+		m_sentenceRender.push_back(newLine);
+	}
+
+	printSentence(color);
+	m_sentenceRender.clear();
+}
+
+void Game::printSentence(glm::vec4 color)
+{
+	for (int i = 0; i < m_sentenceRender.size(); i++)
+	{
+		m_tr.renderText(m_sentenceRender[i], m_textOffset, 200.0f - (50.0f * i), m_textScale, color);
+	}
+}
+
+float Game::getLetterX(int index)
+{
+	return m_textScale * (16.0f * index);
 }
