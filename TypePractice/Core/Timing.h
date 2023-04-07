@@ -17,6 +17,7 @@ typedef struct
 void printTime(timedata td);
 
 std::string getTimePretty(timedata td);
+std::string getTime(timedata td);
 
 float getWPM(timedata duration, int wordCount);
 

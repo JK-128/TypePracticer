@@ -24,6 +24,17 @@ std::string getTimePretty(timedata td)
 	return timeStr;
 }
 
+std::string getTime(timedata td)
+{
+	std::string timeStr = "";
+
+	timeStr += std::to_string(td.hour) + ":" + std::to_string(td.minute);
+	timeStr += +":" + std::to_string(td.second);
+	timeStr += "." + std::to_string(td.mSecond);
+
+	return timeStr;
+}
+
 float getWPM(timedata duration, int wordCount)
 {
 	//First step, convert duration (most likely seconds and milliseconds) to minutes.

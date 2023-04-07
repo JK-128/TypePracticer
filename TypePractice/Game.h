@@ -26,11 +26,17 @@ private:
 
 	ValuesData m_data;
 	Attempt m_attempt;
+
 	TextRenderer m_tr;
-	
+	TextRenderer m_attemptText;
+	TextRenderer m_clockText;
+
+	timedata m_clock;
+
 	Window* m_window;
 
 	bool m_finished = true;
+	bool m_hasTyped = false;
 
 public:
 	void setup(std::string wordsPath, std::string valuesPath);
@@ -38,6 +44,8 @@ public:
 	void passWindow(Window* window);
 	void update();
 	void handleInput();
+
+	int getInput();
 
 	void attempt();
 	void showAttemptStats();

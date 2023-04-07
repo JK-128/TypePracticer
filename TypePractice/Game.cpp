@@ -31,12 +31,10 @@ void Game::setNextSentence()
 	}
 
 	m_sentence = sentence;
-
-	std::cout << sentence << "\n";
 }
 
-void Game::attempt()
-{
+//
+//{
 	/*
 	Attempt attempt;
 
@@ -114,7 +112,7 @@ void Game::attempt()
 
 	m_attempt = attempt;
 	*/
-}
+//}
 
 void Game::showAttemptStats()
 {
@@ -161,29 +159,75 @@ void Game::passWindow(Window* window)
 
 void Game::update()
 {
-	handleInput();
+	if (m_attempt.code == keyNext)
+		m_finished = true;
 
 	if (m_finished)
 	{
-		setNextSentence();
+		m_attempt.input.clear();
+
 		m_finished = false;
+		m_hasTyped = false;
+
+		setNextSentence();
 	}
+
+	attempt();
 
 	m_tr.renderText(m_sentence, 0.0f, 0.0f);
+	m_attemptText.renderText(m_attempt.input, 0.0f, 0.0f, 1.0f, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+
+	if (m_hasTyped)
+	{
+		timedata diff = getTimeDifference(m_clock);
+		std::string diffStr = getTime(diff);
+
+		std::cout << diffStr << "\n";
+
+		m_clockText.renderText(diffStr, 0.0f, 450.0f);
+	}
 }
 
-void Game::handleInput()
+void Game::attempt()
 {
-	for (int i = 0; i < keyActions.size(); i++)
-	{
-		if (keyActions[i] == keyExit)
-			m_attempt.code = keyExit;
+	int key = getInput();
 
-		else if (keyActions[i] == keyNext)
-			m_finished = true;
+	if (key == -1)
+		return;
+
+	if (key == keyExit)
+	{
+		m_attempt.code = keyExit;
+		return;
+	}
+	else if (key == keyNext)
+	{
+		m_finished = true;
+		return;
 	}
 
-	keyActions.clear();
+	if (!m_hasTyped)
+	{
+		m_hasTyped = true;
+		m_clock = getCurrentTime();
+	}
+
+	if (key != GLFW_KEY_SPACE)
+		key += 32;
+
+	m_attempt.input.push_back((char)key);
+}
+
+int Game::getInput()
+{
+	if (keyActions.size() < 1)
+		return -1;
+
+	int key = keyActions[0];
+
+	keyActions.erase(keyActions.begin());
+
+	return key;
 }
 
 bool Game::shouldExit()
