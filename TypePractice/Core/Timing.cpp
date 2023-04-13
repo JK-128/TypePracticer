@@ -26,11 +26,13 @@ std::string getTimePretty(timedata td)
 
 std::string getTime(timedata td)
 {
-	std::string timeStr = "";
+	std::string timeStr = std::to_string(td.second);
+	std::string msStr   = std::to_string(td.mSecond);
 
-	timeStr += std::to_string(td.hour) + ":" + std::to_string(td.minute);
-	timeStr += +":" + std::to_string(td.second);
-	timeStr += "." + std::to_string(td.mSecond);
+	if (msStr.size() < 3)
+		msStr = "000" + msStr;
+
+	timeStr += "." + msStr.substr(msStr.size() - 3, 1);
 
 	return timeStr;
 }

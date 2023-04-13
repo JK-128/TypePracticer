@@ -192,7 +192,7 @@ void Game::update()
 
 		std::string accString = std::to_string(accuracy);
 
-		m_tr.renderText(diffStr, 0.0f, 450.0f);
+		m_tr.renderText(diffStr, 10.0f, 450.0f);
 		m_tr.renderText(trimFloat(accString) + "%", 200.0f, 450.0f);
 	}
 

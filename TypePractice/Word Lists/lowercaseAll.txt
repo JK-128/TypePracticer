@@ -18633,11 +18633,6 @@ fading
 fads
 faecal
 faeces
-fag
-faggot
-faggots
-fagot
-fags
 fail
 failed
 failing
@@ -33734,11 +33729,6 @@ niftily
 nifty
 niger
 nigeria
-niggardly
-niggle
-niggled
-niggles
-niggling
 nigh
 night
 nightcap
